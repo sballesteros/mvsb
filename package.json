@@ -1,0 +1,20 @@
+{
+  "name": "mvsb",
+  "version": "0.0.0",
+  "description": "yet another vanilla JS multiple value select box component",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/standard-analytics/mvsb.git"
+  },
+  "keywords": [
+    "select",
+    "multiple"
+  ],
+  "author": "Sebastien Ballesteros",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/standard-analytics/mvsb/issues"
+  },
+  "homepage": "https://github.com/standard-analytics/mvsb"
+}

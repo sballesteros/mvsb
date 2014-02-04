@@ -1,0 +1,30 @@
+ul.mvsb-values{
+  display:inline;
+  margin: 0px;
+  padding: 0px;
+}
+.mvsb-values li{
+  display: inline;
+  list-style-type: none;
+  margin: 3px 0px 3px 4px;
+  padding: 3px 5px 3px 5px;
+  border: 1px solid rgb(229, 229, 229);
+  border-radius: 3px;
+  box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+  color: #333;
+  line-height: 13px;
+  cursor: default;
+}
+
+.mvsb-values li a{  
+  color: black;
+  font-weight: bold;
+  text-decoration: none;  
+  margin-left:4px;
+  opacity:0.5;
+}
+
+.mvsb-values li a:hover{
+  opacity:1;
+}
+
