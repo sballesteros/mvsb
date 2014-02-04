@@ -1,4 +1,5 @@
 function Mvsb(select){
+  var self = this;
 
   this.select = select;
 
@@ -12,7 +13,9 @@ function Mvsb(select){
         }
       });
     } else {
-      select.nextElementSibling.insertAdjacentHTML('beforeend', '<li data-value="' + this.value + '">' + this.value + '<a href="#">&times;</a></li>');
+      if(self.values().indexOf(this.value) === -1){        
+        select.nextElementSibling.insertAdjacentHTML('beforeend', '<li data-value="' + this.value + '">' + this.value + '<a href="#">&times;</a></li>');
+      }
     }
     this.selectedIndex = 0;
   });
