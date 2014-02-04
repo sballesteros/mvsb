@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function(){
+
+      var select = document.getElementsByTagName('select')[0];
+      var mvsb = new Mvsb(select);
+      setTimeout(function(){
+      console.log(mvsb.values());
+      }, 3000);
+
+      });
+    </script>
+  </head>
+  <body>
+
+    <select>
+      <option>select some inputs</option>
+      <optgroup label="Dataset">
+        <option>iris.csv</option>
+        <option>iris2.csv</option>
+      </optgroup> 
+      <optgroup label="Code">
+        <option>script.r</option>
+        <option>script2.r</option>
+      </optgroup>
+    </select>
+
+  </body>
+</html>
+
