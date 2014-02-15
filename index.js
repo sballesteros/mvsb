@@ -1,4 +1,9 @@
+var util = require("util");
+var events = require("events");
+
 function Mvsb(select){
+  events.EventEmitter.call(this);
+
   var self = this;
 
   this.select = select;
@@ -6,22 +11,29 @@ function Mvsb(select){
   select.addEventListener('change', function(e){
     if(!select.nextElementSibling || !select.nextElementSibling.classList.contains('mvsb-values')){
       select.insertAdjacentHTML('afterend', '<ul class="mvsb-values">'+ _createLi(this.value) + '</ul>');
+      self.emit('added', this.value);
+
       //at first creation of ul, add click handler to remove
       select.nextElementSibling.addEventListener('click', function(e){
         e.preventDefault();
         if(e.target.tagName === 'A'){
+          self.emit('removed', e.target.parentNode.getAttribute('data-value'));
           this.removeChild(e.target.parentNode);
         }
       });
     } else {
       if(self.values().indexOf(this.value) === -1){        
         select.nextElementSibling.insertAdjacentHTML('beforeend', _createLi(this.value));
+        self.emit('added', this.value);
       }
     }
     this.selectedIndex = 0;
   });
 
 };
+
+util.inherits(Mvsb, events.EventEmitter);
+
 
 Mvsb.prototype.append = function(value){
   var opt;
@@ -87,7 +99,9 @@ Mvsb.prototype.remove = function(value){
       }
 
       if(li){
-        ul.removeChild(li);
+        var event = document.createEvent('HTMLEvents');
+        event.initEvent('click', true, false);
+        li.lastElementChild.dispatchEvent(event);
       }
     }
   }  
@@ -114,6 +128,4 @@ function _createLi(value){
 };
 
 
-if (typeof module !== 'undefined' && module.exports){
-  module.exports = Mvsb;
-}
+module.exports = Mvsb;
