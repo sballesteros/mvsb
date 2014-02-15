@@ -6,6 +6,7 @@ function Mvsb(select){
   select.addEventListener('change', function(e){
     if(!select.nextElementSibling || !select.nextElementSibling.classList.contains('mvsb-values')){
       select.insertAdjacentHTML('afterend', '<ul class="mvsb-values">'+ _createLi(this.value) + '</ul>');
+      //at first creation of ul, add click handler to remove
       select.nextElementSibling.addEventListener('click', function(e){
         e.preventDefault();
         if(e.target.tagName === 'A'){
@@ -49,7 +50,14 @@ Mvsb.prototype.append = function(value){
         ul.insertAdjacentHTML('beforeend', _createLi(value));
       }
     } else {
-      this.select.insertAdjacentHTML('afterend', '<ul class="mvsb-values">'+ _createLi(value) + '</ul>');      
+
+      //set value and trigger change event so that click handler is added to li
+      this.select.value = value;
+
+      var event = document.createEvent('HTMLEvents');
+      event.initEvent('change', true, false);
+      this.select.dispatchEvent(event);
+
     }
   }
 };
@@ -99,7 +107,6 @@ Mvsb.prototype.values = function(){
 
   return values;
 };
-
 
 
 function _createLi(value){

@@ -10,7 +10,6 @@
         var select = document.getElementsByTagName('select')[0];
         var mvsb = new Mvsb(select);
         setTimeout(function(){
-          console.log(mvsb.values());
           mvsb.append('script.r');
           setTimeout(function(){
             mvsb.remove('script.r');
