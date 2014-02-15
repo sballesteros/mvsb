@@ -17,8 +17,9 @@ function Mvsb(select){
       select.nextElementSibling.addEventListener('click', function(e){
         e.preventDefault();
         if(e.target.tagName === 'A'){
-          self.emit('removed', e.target.parentNode.getAttribute('data-value'));
+          var rvalue = e.target.parentNode.getAttribute('data-value');
           this.removeChild(e.target.parentNode);
+          self.emit('removed', rvalue);
         }
       });
     } else {

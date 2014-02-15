@@ -1,6 +1,6 @@
 {
   "name": "mvsb",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "yet another vanilla JS multiple value select box component",
   "main": "index.js",
   "repository": {
