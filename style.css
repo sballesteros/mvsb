@@ -4,7 +4,7 @@ ul.mvsb-values{
   padding: 0px;
 }
 .mvsb-values li{
-  display: inline;
+  display: inline-block;
   list-style-type: none;
   margin: 3px 0px 3px 4px;
   padding: 3px 5px 3px 5px;
