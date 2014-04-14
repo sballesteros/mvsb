@@ -10,7 +10,7 @@
 
       document.addEventListener('DOMContentLoaded', function(){
         var select = document.getElementsByTagName('select')[0];
-        var mvsb = new Mvsb(select);
+        var mvsb = new Mvsb(select, { destroyable: true });
         mvsb.on('added', function(data){console.log('a', data)});
         mvsb.on('removed', function(data){console.log('r', data)});
         setTimeout(function(){

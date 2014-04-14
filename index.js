@@ -1,30 +1,37 @@
 var util = require("util");
 var events = require("events");
 
-function Mvsb(select){
+function Mvsb(select, opts){
   events.EventEmitter.call(this);
+
+  opts = opts || {};
+  this.destroyable = opts.destroyable || false;
 
   var self = this;
 
   this.select = select;
 
+
   select.addEventListener('change', function(e){
     if(!select.nextElementSibling || !select.nextElementSibling.classList.contains('mvsb-values')){
-      select.insertAdjacentHTML('afterend', '<ul class="mvsb-values">'+ _createLi(this.value) + '</ul>');
+      select.insertAdjacentHTML('afterend', '<ul class="mvsb-values">'+ self._createLi(this.value) + '</ul>');
       self.emit('added', this.value);
 
       //at first creation of ul, add click handler to remove
-      select.nextElementSibling.addEventListener('click', function(e){
-        e.preventDefault();
-        if(e.target.tagName === 'A'){
-          var rvalue = e.target.parentNode.getAttribute('data-value');
-          this.removeChild(e.target.parentNode);
-          self.emit('removed', rvalue);
-        }
-      });
+      if(self.destroyable){
+        select.nextElementSibling.addEventListener('click', function(e){
+          e.preventDefault();
+          if(e.target.tagName === 'A'){
+            var rvalue = e.target.parentNode.getAttribute('data-value');
+            this.removeChild(e.target.parentNode);
+            self.emit('removed', rvalue);
+          }
+        });
+      }
+
     } else {
-      if(self.values().indexOf(this.value) === -1){        
-        select.nextElementSibling.insertAdjacentHTML('beforeend', _createLi(this.value));
+      if(self.values().indexOf(this.value) === -1){
+        select.nextElementSibling.insertAdjacentHTML('beforeend', self._createLi(this.value));
         self.emit('added', this.value);
       }
     }
@@ -60,7 +67,7 @@ Mvsb.prototype.append = function(value){
       }
 
       if(!alreadyIn){
-        ul.insertAdjacentHTML('beforeend', _createLi(value));
+        ul.insertAdjacentHTML('beforeend', this._createLi(value));
       }
     } else {
 
@@ -76,6 +83,8 @@ Mvsb.prototype.append = function(value){
 };
 
 Mvsb.prototype.remove = function(value){
+  if(!this.destroyable) return;
+
   var opt;
   var opts = this.select.getElementsByTagName('option');
   for(var i=0; i<opts.length; i++){
@@ -105,7 +114,7 @@ Mvsb.prototype.remove = function(value){
         li.lastElementChild.dispatchEvent(event);
       }
     }
-  }  
+  }
 
 };
 
@@ -123,9 +132,12 @@ Mvsb.prototype.values = function(){
   return values;
 };
 
-
-function _createLi(value){
-  return '<li data-value="' + value + '">' + value + '<a href="#">&times;</a></li>';
+Mvsb.prototype._createLi = function(value){
+  if(this.destroyable){
+    return '<li data-value="' + value + '">' + value + '<a href="#">&times;</a></li>';
+  } else {
+    return '<li data-value="' + value + '">' + value + '</li>';
+  }
 };
 
 
